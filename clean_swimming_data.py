@@ -21,8 +21,19 @@ def enforce_bone_lengths(pose_3d: np.ndarray) -> np.ndarray:
     return pose_3d
 
 
+def _load_pose_array(input_path: Path) -> np.ndarray:
+    if input_path.suffix == ".npz":
+        loaded = np.load(input_path)
+        if "poses" not in loaded:
+            raise ValueError("NPZ input must contain a 'poses' array")
+        return loaded["poses"]
+    return np.load(input_path)
+
+
 def clean_swimming_data(input_path: Path, output_path: Path, cutoff: float = 3, fs: float = 30, order: int = 2) -> None:
-    raw_3d_data = np.load(input_path)
+    raw_3d_data = _load_pose_array(input_path)
+    if raw_3d_data.ndim != 3:
+        raise ValueError("Expected 3D pose array shaped [frames, joints, coords]")
 
     print("Applying aquatic noise filters...")
     smoothed_data = apply_butterworth_filter(raw_3d_data, cutoff=cutoff, fs=fs, order=order)
@@ -35,7 +46,7 @@ def clean_swimming_data(input_path: Path, output_path: Path, cutoff: float = 3, 
 
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="Apply aquatic post-processing to 3D swimming pose data.")
-    parser.add_argument("input", type=Path, help="Path to DiffPose output .npy file")
+    parser.add_argument("input", type=Path, help="Path to DiffPose output .npy/.npz file")
     parser.add_argument(
         "--output",
         type=Path,

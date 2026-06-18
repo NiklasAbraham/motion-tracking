@@ -18,7 +18,7 @@ pip install numpy opencv-python ultralytics scipy matplotlib
 This repository includes `extract_2d_joints.py` for offline per-frame 2D extraction using YOLOv8x-pose.
 
 ```bash
-python /home/runner/work/motion-tracking/motion-tracking/extract_2d_joints.py \
+python extract_2d_joints.py \
   /absolute/path/to/your_swimming_video.mp4 \
   --output /absolute/path/to/swimmer_2d_output.npz
 ```
@@ -48,7 +48,7 @@ Use DiffPose to lift 2D joints to temporally consistent 3D trajectories:
 This repository includes `clean_swimming_data.py` to smooth 3D trajectories and provide a hook for bone-length/refraction constraints.
 
 ```bash
-python /home/runner/work/motion-tracking/motion-tracking/clean_swimming_data.py \
+python clean_swimming_data.py \
   /absolute/path/to/diffpose_output.npy \
   --output /absolute/path/to/swimmer_3d_cleaned.npy
 ```
