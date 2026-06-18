@@ -224,3 +224,6 @@ __marimo__/
 # Output files
 *.npz
 *.npy
+
+# Video files
+videos/
