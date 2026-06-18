@@ -107,6 +107,8 @@ def lift_2d_to_3d(
     # Handle zero-frame input
     if num_frames == 0:
         output_3d = np.zeros((0, 16, 3), dtype=np.float32)
+        # Ensure output directory exists
+        output_3d_path.parent.mkdir(parents=True, exist_ok=True)
         np.save(output_3d_path, output_3d)
         return 0
     

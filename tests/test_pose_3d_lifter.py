@@ -20,6 +20,12 @@ from pose_3d_lifter import lift_2d_to_3d, LiftingConfig, ConfigError, load_diffp
 class TestPose3DLifter:
     """Test suite for pose_3d_lifter module."""
     
+    # Threshold for temporal consistency validation in mocked implementation.
+    # This value is appropriate because the mock generates synthetic depth values
+    # that vary smoothly, and frame-to-frame differences in smooth sinusoidal
+    # motion should be well under 1.0 units.
+    TEMPORAL_CONSISTENCY_THRESHOLD = 1.0
+    
     @pytest.fixture
     def temp_dir(self):
         """Create temporary directory for test files."""
@@ -160,6 +166,7 @@ class TestPose3DLifter:
         input_2d = np.zeros((num_frames, 16, 2), dtype=np.float32)
         
         # Create smooth sinusoidal motion for all joints
+        # Phase offset (0.1) ensures each joint has different but smooth motion patterns
         for joint_idx in range(16):
             input_2d[:, joint_idx, 0] = np.sin(t + joint_idx * 0.1)
             input_2d[:, joint_idx, 1] = np.cos(t + joint_idx * 0.1)
@@ -182,10 +189,9 @@ class TestPose3DLifter:
         frame_diffs = np.diff(output_3d, axis=0)
         max_diff = np.max(np.abs(frame_diffs))
         
-        # For smooth input, max frame-to-frame change should be reasonable
-        # (this is a heuristic threshold for synthetic data)
-        threshold = 1.0
-        assert max_diff < threshold, f"Max frame diff {max_diff} exceeds threshold {threshold}"
+        # Verify temporal consistency using class-level threshold
+        assert max_diff < self.TEMPORAL_CONSISTENCY_THRESHOLD, \
+            f"Max frame diff {max_diff} exceeds threshold {self.TEMPORAL_CONSISTENCY_THRESHOLD}"
     
     def test_T4_7_nan_handling(self, temp_dir, mock_checkpoint):
         """T4.7: Test frames with NaN remain NaN in output."""
