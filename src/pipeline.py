@@ -118,6 +118,10 @@ class Pipeline:
         Raises:
             FileNotFoundError: If video file doesn't exist
             ValueError: If video is invalid
+            
+        Note:
+            This is a placeholder implementation. In production, this would call
+            validate_video() from src.input_validator module (Task 001).
         """
         self._report_progress("validate", 0)
         
@@ -125,8 +129,10 @@ class Pipeline:
         if not self.video_path.exists():
             raise FileNotFoundError(f"Video file not found: {self.video_path}")
         
-        # Placeholder: In a real implementation, this would call validate_video()
-        # from the input validator module and extract actual metadata
+        # Placeholder: In production, this would:
+        # from src.input_validator import validate_video
+        # metadata = validate_video(self.video_path)
+        # For now, use placeholder values
         metadata = {
             "path": str(self.video_path),
             "width": 1920,
@@ -149,14 +155,21 @@ class Pipeline:
         
         Returns:
             Path to the 2D poses NPZ file
+            
+        Note:
+            This is a placeholder implementation. In production, this would call
+            extract_2d_keypoints() from src.pose_2d_extractor module (Task 002).
+            The actual implementation would use the existing extract_2d_joints.py
+            or integrate it into the module structure.
         """
         self._report_progress("2d_extract", 0)
         
-        # Placeholder: In a real implementation, this would call extract_2d_keypoints()
-        # from the 2D pose estimation module
+        # Placeholder: In production, this would:
+        # from src.pose_2d_extractor import extract_2d_keypoints
+        # extract_2d_keypoints(self.video_path, output_path, self.config.model_2d)
+        # For now, create dummy output
         import numpy as np
         
-        # Create dummy output
         output_path = self.config.working_dir / "poses_2d.npz"
         dummy_poses = np.random.rand(100, 17, 3)  # 100 frames, 17 joints, (x, y, conf)
         np.savez(output_path, poses=dummy_poses)
@@ -169,11 +182,19 @@ class Pipeline:
         
         Returns:
             Path to the mapped poses NPZ file
+            
+        Note:
+            This is a placeholder implementation. In production, this would call
+            map_yolo_to_diffpose() from src.keypoint_mapper module (Task 003).
         """
         self._report_progress("map", 0)
         
-        # Placeholder: In a real implementation, this would call map_yolo_to_diffpose()
-        # from the keypoint mapper module
+        # Placeholder: In production, this would:
+        # from src.keypoint_mapper import map_yolo_to_diffpose
+        # input_data = np.load(input_path)['poses']
+        # mapped = map_yolo_to_diffpose(input_data)
+        # np.savez(output_path, poses=mapped)
+        # For now, create dummy output
         import numpy as np
         
         # Load input
@@ -193,11 +214,17 @@ class Pipeline:
         
         Returns:
             Path to the 3D poses NPY file
+            
+        Note:
+            This is a placeholder implementation. In production, this would call
+            lift_2d_to_3d() from src.pose_3d_lifter module (Task 004).
         """
         self._report_progress("lift", 0)
         
-        # Placeholder: In a real implementation, this would call lift_2d_to_3d()
-        # from the 3D lifting module
+        # Placeholder: In production, this would:
+        # from src.pose_3d_lifter import lift_2d_to_3d
+        # lift_2d_to_3d(input_path, output_path, self.config.lifting_config)
+        # For now, create dummy output
         import numpy as np
         
         # Load input
@@ -217,11 +244,24 @@ class Pipeline:
         
         Returns:
             Path to the cleaned 3D poses NPY file
+            
+        Note:
+            This is a placeholder implementation. In production, this would call
+            clean_swimming_data() from src.post_processor module (Task 005).
+            The actual implementation would use the existing clean_swimming_data.py
+            or integrate it into the module structure.
         """
         self._report_progress("post_process", 0)
         
-        # Placeholder: In a real implementation, this would call clean_swimming_data()
-        # from the post-processing module
+        # Placeholder: In production, this would:
+        # from src.post_processor import clean_swimming_data
+        # clean_swimming_data(
+        #     input_path, output_path,
+        #     cutoff=self.config.filter_cutoff,
+        #     fs=self.config.filter_fs,
+        #     order=self.config.filter_order
+        # )
+        # For now, create dummy output
         import numpy as np
         
         # Load input
@@ -240,11 +280,17 @@ class Pipeline:
         
         Returns:
             Path to the visualization output file
+            
+        Note:
+            This is a placeholder implementation. In production, this would call
+            visualize_3d() from src.visualizer module (Task 006).
         """
         self._report_progress("visualize", 0)
         
-        # Placeholder: In a real implementation, this would call visualize_3d()
-        # from the visualization module
+        # Placeholder: In production, this would:
+        # from src.visualizer import visualize_3d
+        # visualize_3d(input_path, output_path, format=self.config.viz_format)
+        # For now, create dummy output
         output_filename = f"visualization.{self.config.viz_format}"
         output_path = self.config.working_dir / output_filename
         
