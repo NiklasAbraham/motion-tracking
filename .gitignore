@@ -216,3 +216,11 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# YOLO model files
+*.pt
+*.pth
+
+# Output files
+*.npz
+*.npy

@@ -1,51 +1,13 @@
+"""CLI wrapper for the 2D pose extraction module.
+
+This script provides a command-line interface for extracting 2D keypoints
+from swimming videos using the src.pose_2d_extractor module.
+"""
+
 import argparse
 from pathlib import Path
 
-import cv2
-import numpy as np
-from ultralytics import YOLO
-
-
-def _select_primary_detection(keypoints: np.ndarray) -> np.ndarray:
-    """Select the detection with the highest average keypoint confidence."""
-    if len(keypoints) == 1:
-        return keypoints[0]
-    confidence_means = keypoints[:, :, 2].mean(axis=1)
-    return keypoints[int(np.argmax(confidence_means))]
-
-
-def extract_2d_keypoints(video_path: Path, output_path: Path, model_name: str = "yolov8x-pose.pt") -> int:
-    """Extract 2D keypoints from a swimming video and save them to NPZ."""
-    model = YOLO(model_name)
-    cap = cv2.VideoCapture(str(video_path))
-    all_frames_2d = []
-
-    print("Starting 2D Keypoint Extraction... (Processing offline)")
-
-    while cap.isOpened():
-        ret, frame = cap.read()
-        if not ret:
-            break
-
-        results = model(frame, verbose=False)
-
-        frame_pose = np.full((17, 3), np.nan, dtype=float)
-        for r in results:
-            keypoints = r.keypoints.data.cpu().numpy()
-            if len(keypoints) > 0:
-                frame_pose = _select_primary_detection(keypoints)
-                break
-
-        all_frames_2d.append(frame_pose)
-
-    cap.release()
-
-    poses = np.array(all_frames_2d)
-    output_path.parent.mkdir(parents=True, exist_ok=True)
-    np.savez(output_path, poses=poses)
-    print(f"Extraction complete! Saved {len(poses)} frames to '{output_path}'")
-
-    return len(poses)
+from src.pose_2d_extractor import extract_2d_keypoints
 
 
 def parse_args() -> argparse.Namespace:
