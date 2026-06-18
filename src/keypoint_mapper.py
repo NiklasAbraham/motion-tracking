@@ -5,20 +5,20 @@ This module converts YOLO 17-joint COCO keypoints to DiffPose 16-joint Human3.6M
 YOLO format: (frames, 17, 3) - 17 joints with [x, y, confidence]
 DiffPose format: (frames, 16, 2) - 16 joints with [x, y] only
 
-Mapping from YOLO Index to DiffPose Index:
-    YOLO 0 (Nose) -> DiffPose 9 (Head)
-    YOLO 5 (Left Shoulder) -> DiffPose 11
-    YOLO 6 (Right Shoulder) -> DiffPose 14
-    YOLO 7 (Left Elbow) -> DiffPose 12
-    YOLO 8 (Right Elbow) -> DiffPose 15
-    YOLO 9 (Left Wrist) -> DiffPose 13
-    YOLO 10 (Right Wrist) -> DiffPose 16
-    YOLO 11 (Left Hip) -> DiffPose 4
-    YOLO 12 (Right Hip) -> DiffPose 1
-    YOLO 13 (Left Knee) -> DiffPose 5
-    YOLO 14 (Right Knee) -> DiffPose 2
-    YOLO 15 (Left Ankle) -> DiffPose 6
-    YOLO 16 (Right Ankle) -> DiffPose 3
+Mapping from YOLO Index to DiffPose Index (using 0-based array indexing):
+    YOLO 0 (Nose) -> DiffPose 8 (Head; spec lists as 9)
+    YOLO 5 (Left Shoulder) -> DiffPose 10 (spec lists as 11)
+    YOLO 6 (Right Shoulder) -> DiffPose 13 (spec lists as 14)
+    YOLO 7 (Left Elbow) -> DiffPose 11 (spec lists as 12)
+    YOLO 8 (Right Elbow) -> DiffPose 14 (spec lists as 15)
+    YOLO 9 (Left Wrist) -> DiffPose 12 (spec lists as 13)
+    YOLO 10 (Right Wrist) -> DiffPose 15 (spec lists as 16)
+    YOLO 11 (Left Hip) -> DiffPose 3 (spec lists as 4)
+    YOLO 12 (Right Hip) -> DiffPose 0 (spec lists as 1)
+    YOLO 13 (Left Knee) -> DiffPose 4 (spec lists as 5)
+    YOLO 14 (Right Knee) -> DiffPose 1 (spec lists as 2)
+    YOLO 15 (Left Ankle) -> DiffPose 5 (spec lists as 6)
+    YOLO 16 (Right Ankle) -> DiffPose 2 (spec lists as 3)
 """
 
 import numpy as np
