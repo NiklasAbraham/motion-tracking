@@ -23,9 +23,10 @@ def run_pipeline(video_path: Path, output_dir: Path, config: PipelineConfig) -> 
 
 1. Input validation
 2. 2D pose estimation
-3. 3D lifting
-4. Post-processing
-5. Visualization
+3. Keypoint format mapping (YOLO → DiffPose)
+4. 3D lifting
+5. Post-processing
+6. Visualization
 
 ## Configuration
 

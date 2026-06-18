@@ -19,7 +19,7 @@ Build a utility module that converts YOLO 17-joint COCO keypoints to the DiffPos
 2. Outputs a `(frames, 16, 2)` array (DiffPose format, xy only).
 3. Correctly maps each YOLO joint index to its DiffPose equivalent.
 4. Handles NaN frames gracefully (passes NaN through).
-5. Drops the nose joint or maps it to head as defined in spec.
+5. Maps the YOLO nose joint (index 0) to the DiffPose head joint (index 9).
 
 ## Dependencies (External)
 

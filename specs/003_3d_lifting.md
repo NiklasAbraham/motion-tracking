@@ -6,7 +6,7 @@ Convert 2D keypoint sequences into temporally consistent 3D joint trajectories.
 
 ## Requirements
 
-1. Accept 2D keypoint data (NPZ format from Stage 1).
+1. Accept 2D keypoint data (NPZ format from 2D pose estimation stage).
 2. Map YOLO 17-joint format to DiffPose 16-joint format.
 3. Produce 3D coordinates for each joint per frame.
 4. Maintain temporal coherence across consecutive frames.
