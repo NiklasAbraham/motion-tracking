@@ -1,9 +1,0 @@
-{
-  "path": "/tmp/pytest-of-runner/pytest-2/test_main_with_minimal_args0/test_video.mp4",
-  "width": 1920,
-  "height": 1080,
-  "fps": 30.0,
-  "frame_count": 100,
-  "duration_seconds": 3.33,
-  "codec": "h264"
-}
